@@ -1,0 +1,21 @@
+import heapq,math
+start=(0,0); goal=(4,4)
+blocked={(1,1),(2,2)}
+def h(a,b=goal): return abs(a[0]-b[0])+abs(a[1]-b[1])
+def astar():
+    open=[(h(start),0,start)]
+    g={start:0}; parent={}
+    while open:
+        f,_,cur=heapq.heappop(open)
+        if cur==goal:
+            path=[]; x=cur
+            while x in parent: path.append(x); x=parent[x]
+            return list(reversed(path+[start]))
+        for dx,dy in [(1,0),(-1,0),(0,1),(0,-1)]:
+            nx=(cur[0]+dx,cur[1]+dy)
+            if nx[0]<0 or nx[1]<0 or nx[0]>4 or nx[1]>4 or nx in blocked: continue
+            ng=g[cur]+1
+            if ng<g.get(nx,1e9):
+                g[nx]=ng; parent[nx]=cur
+                heapq.heappush(open,(ng+h(nx),ng,nx))
+print(astar())
