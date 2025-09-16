@@ -1,0 +1,11 @@
+import math
+pts=[(0,0),(1,5),(5,2),(6,6)]
+def dist(a,b): return math.hypot(a[0]-b[0],a[1]-b[1])
+def nearest(start=0):
+    n=len(pts); tour=[start]; used={start}
+    while len(tour)<n:
+        cur=tour[-1]
+        nxt=min([i for i in range(n) if i not in used], key=lambda i: dist(pts[cur],pts[i]))
+        tour.append(nxt); used.add(nxt)
+    tour.append(start); return tour
+print(nearest())
