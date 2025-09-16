@@ -1,0 +1,16 @@
+from collections import deque
+def solve():
+    start=(3,3,0); goal=(0,0,1)
+    moves=[(1,0),(2,0),(0,1),(0,2),(1,1)]
+    q=deque([(start,[])]); seen=set([start])
+    while q:
+        (m,c,b),path=q.popleft()
+        if (m,c,b)==goal: return path+[(m,c,b)]
+        for dm,dc in moves:
+            nm = m-dm if b==0 else m+dm
+            nc = c-dc if b==0 else c+dc
+            nb = 1-b
+            if 0<=nm<=3 and 0<=nc<=3 and (nm==0 or nm>=nc) and (3-nm==0 or 3-nm>=3-nc):
+                st=(nm,nc,nb)
+                if st not in seen: seen.add(st); q.append((st,path+[(m,c,b)]))
+print(solve())
