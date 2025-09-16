@@ -1,0 +1,36 @@
+# small concise A* 8-puzzle (may be slow for some inputs)
+from heapq import heappush, heappop
+start=(1,2,3,4,5,6,7,0,8) # example; 0 is blank
+goal=(1,2,3,4,5,6,7,8,0)
+moves=[(-3,0,1),(3,0,1),(-1,0,1),(1,0,1)]
+def manh(state):
+    s=0
+    for i,v in enumerate(state):
+        if v:
+            gi=(v-1)//3; gj=(v-1)%3; i0=i//3; j0=i%3
+            s+=abs(gi-i0)+abs(gj-j0)
+    return s
+def neigh(s):
+    i=s.index(0)
+    res=[]
+    for d in (-3,3,-1,1):
+        j=i+d
+        if 0<=j<9 and not (d==-1 and i%3==0) and not (d==1 and i%3==2):
+            t=list(s); t[i],t[j]=t[j],t[i]; res.append(tuple(t))
+    return res
+def astar(start):
+    open=[(manh(start),0,start,None)]
+    g={start:0}; parent={}
+    while open:
+        f,_,cur,_=heappop(open)
+        if cur==goal:
+            path=[]; x=cur
+            while x: path.append(x); x=parent.get(x)
+            return path[::-1]
+        for n in neigh(cur):
+            ng=g[cur]+1
+            if ng<g.get(n,1e9):
+                g[n]=ng; parent[n]=cur
+                heappush(open,(ng+manh(n),ng,n,cur))
+    return None
+print("sol length:", len(astar(tuple(start)))-1)
