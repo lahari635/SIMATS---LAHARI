@@ -1,0 +1,12 @@
+from collections import deque
+def water(a,b,target):
+    vis=set(); q=deque([ (0,0,[]) ])
+    while q:
+        x,y,path=q.popleft()
+        if (x,y) in vis: continue
+        vis.add((x,y))
+        if x==target or y==target: return path+[(x,y)]
+        states=[(a,y),(x,b),(0,y),(x,0),(x+min(b-y,a-x),y+min(b-y,a-x)),(x-min(x,y),y-min(x,y))]
+        for s in states: q.append((s[0],s[1],path+[(x,y)]))
+    return None
+print(water(4,3,2))
