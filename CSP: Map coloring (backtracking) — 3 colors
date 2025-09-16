@@ -1,0 +1,14 @@
+regions=['WA','NT','SA','Q','NSW','V','T']
+adj={'WA':['NT','SA'],'NT':['WA','SA','Q'],'SA':['WA','NT','Q','NSW','V'],'Q':['NT','SA','NSW'],'NSW':['Q','SA','V'],'V':['SA','NSW'],'T':[]}
+colors=['red','green','blue']
+assignment={}
+def back(i=0):
+    if i==len(regions): return assignment.copy()
+    r=regions[i]
+    for c in colors:
+        if all(assignment.get(n)!=c for n in adj[r]):
+            assignment[r]=c
+            sol=back(i+1)
+            if sol: return sol
+    assignment.pop(r,None); return None
+print(back())
