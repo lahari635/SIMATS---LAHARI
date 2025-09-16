@@ -1,0 +1,11 @@
+def queens(n=8):
+    ans=[]
+    def back(col,cols,diag1,diag2):
+        if col==n: ans.append(cols[:]); return
+        for r in range(n):
+            if r not in cols and (r-col) not in diag1 and (r+col) not in diag2:
+                cols.append(r); diag1.add(r-col); diag2.add(r+col)
+                back(col+1,cols,diag1,diag2)
+                cols.pop(); diag1.remove(r-col); diag2.remove(r+col)
+    back(0,[],set(),set()); return ans
+print(len(queens()))
