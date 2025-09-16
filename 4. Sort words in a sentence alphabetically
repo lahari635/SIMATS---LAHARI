@@ -1,0 +1,2 @@
+s="this is a sample sentence"
+print(" ".join(sorted(s.split(), key=lambda w:w.lower())))
