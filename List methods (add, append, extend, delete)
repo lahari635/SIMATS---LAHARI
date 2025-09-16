@@ -1,0 +1,7 @@
+L=[1,2]
+L.append(3)        # append single
+L.extend([4,5])    # extend
+L.insert(0,0)      # add at index
+del L[2]           # delete by index
+L.remove(5)        # delete by value
+print(L)
