@@ -1,0 +1,6 @@
+g={'A':['B','C'],'B':['D'],'C':['E'],'D':[],'E':[]}
+def dfs(u,vis=set()):
+    print(u); vis.add(u)
+    for v in g[u]:
+        if v not in vis: dfs(v,vis)
+dfs('A')
